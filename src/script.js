@@ -4,6 +4,9 @@ import GUI from 'lil-gui'
 import gsap from 'gsap'
 import { FontLoader } from 'three/examples/jsm/Addons.js'
 import { TextGeometry } from 'three/examples/jsm/Addons.js'
+import { injectSpeedInsights } from '@vercel/speed-insights';
+
+
 
 //Debug
 const gui = new GUI()
@@ -243,5 +246,5 @@ const tick = () =>{
 }
 
 
-
+injectSpeedInsights();
 tick()
