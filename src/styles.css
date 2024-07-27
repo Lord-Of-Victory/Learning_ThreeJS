@@ -17,6 +17,6 @@ html,body{
 h1{
     font-family: 'Trebuchet MS';
     position: relative;
-    color: white;
+    color: hsl(32, 100%, 50%);
     z-index: 3;
 }
