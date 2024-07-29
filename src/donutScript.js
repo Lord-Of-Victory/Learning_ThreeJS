@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
-import gsap from 'gsap'
+// import gsap from 'gsap'
 import { FontLoader } from 'three/examples/jsm/Addons.js'
 import { TextGeometry } from 'three/examples/jsm/Addons.js'
 import { injectSpeedInsights } from '@vercel/speed-insights';
@@ -36,14 +36,14 @@ pointLight2.position.set(0,0,1)
 scene.add(ambientLight)
 scene.add(pointLight)
 scene.add(pointLight2)
-// scene.add(pointLightHelper)
-// scene.add(pointLightHelper2)
+// // scene.add(pointLightHelper)
+// // scene.add(pointLightHelper2)
 
 const spotLight = new THREE.SpotLight('white',25)
 spotLight.position.set(-1.7,1.1,0.08)
 scene.add(spotLight)
 // const spotLightHelper = new THREE.SpotLightHelper(spotLight)
-// scene.add(spotLightHelper)
+// // scene.add(spotLightHelper)
 
 
 
@@ -54,7 +54,7 @@ scene.add(spotLight)
 // // const envPointsMaterial = new THREE.PointsMaterial({color:'white',wireframe:true}) // Not Figured Out
 // // envPointsMaterial.side = THREE.DoubleSide //Not Figured Out
 // const envMesh = new THREE.Mesh(envGeometry,envMaterial)
-// scene.add(envMesh)
+// // scene.add(envMesh)
 
 //Font
 const worldText = new THREE.Mesh()
@@ -120,7 +120,7 @@ for (let inst = 0; inst < 750; inst++) {
 
 // const mesh = new THREE.Mesh(geometry,material)
 
-// scene.add(mesh)
+// // scene.add(mesh)
 
 const sizes={
     width:window.innerWidth,
@@ -225,13 +225,51 @@ const guiFogFolder = gui.addFolder('Fog')
 guiFogFolder.add(fog,'near',-5,10,1).name('Fog Near')
 guiFogFolder.add(fog,'far',0,50,1).name('Fog Far')
 
-renderer.setClearColor(new THREE.Color('#61f4ff'))
+renderer.setClearColor(new THREE.Color('#61f4ff')) // #61f4ff - prev color
 
 // console.log(donutGroup.children)
 
+
+
+//Particle System
+
+const particleCount = 500
+const particleGeometry = new THREE.BufferGeometry()
+const particleTextureLoader = new THREE.TextureLoader(loadManager)
+const particleTexture = particleTextureLoader.load('/particles/1.png')
+console.log(particleTexture)
+const particlePoints = new Float32Array(particleCount * 3)
+
+for (let i = 0; i < particleCount*3; i++) {
+    particlePoints[i]=(Math.random() -0.5)*5
+}
+
+particleGeometry.setAttribute('position',new THREE.BufferAttribute(particlePoints, 3))
+const particleMaterial = new THREE.PointsMaterial()
+particleMaterial.size=0.05
+particleMaterial.sizeAttenuation=true
+particleMaterial.color=new THREE.Color('smokewhite')
+particleMaterial.transparent=true
+particleMaterial.alphaMap=particleTexture
+particleMaterial.depthWrite=false
+particleMaterial.blending = THREE.AdditiveBlending
+
+const particles = new THREE.Points(particleGeometry,particleMaterial)
+
+// console.log(particles)
+scene.add(particles)
+
+
+// let prevTime = 0
 const tick = () =>{
     
     // console.log(clock.getElapsedTime())
+
+    // let currentTime = clock.getElapsedTime()
+    // let deltaTime = currentTime - prevTime
+    // prevTime=currentTime
+    // console.log(deltaTime);
+
     orbitControls.update()
     // pointLightHelper.update()
     // pointLightHelper2.update()

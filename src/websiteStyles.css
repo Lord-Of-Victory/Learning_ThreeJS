@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html,body{
+    /* overflow: hidden; */
+    background-color: rgb(17, 9, 8);
+}
+
+.webGLWebsite{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: 0;
+}
+
+div{
+    height: 100vh;
+    display: flex;
+    position: relative;
+    align-items: center;
+    font-family: 'Cabin', sans-serif;
+    color: #ffeded;
+    text-transform: uppercase;
+    font-size: 7vmin;
+    padding-left: 10%;
+    padding-right: 10%;
+    z-index: 2;
+
+}
+
+div:nth-child(odd){
+    justify-content: flex-end;
+}
